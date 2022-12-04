@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">Welcome</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/join">Join</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Menu Login</a>
               </li>
             </ul>
           </div>
