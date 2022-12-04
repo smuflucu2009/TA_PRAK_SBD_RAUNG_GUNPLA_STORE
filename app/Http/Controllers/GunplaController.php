@@ -16,8 +16,6 @@ class GunplaController extends Controller
      * @return \Illuminate\Http\Response
      */
     function index() {
-        // $data = Gunpla::orderby('id_gunpla', 'desc')->paginate(4);
-        // return view('gunpla/index')->with('data', $data);
         $data = DB::select('SELECT * FROM gunpla where deleted_at is null');
         return view('gunpla.index')
         ->with('data', $data);
@@ -36,8 +34,6 @@ class GunplaController extends Controller
 
         return view('gunpla.index')
             ->with('data', $data);
-
-
     }
 
     /**
@@ -169,18 +165,5 @@ class GunplaController extends Controller
         return view('gunpla.sampah')
         ->with('data', $data);
     }
-
-    // public function cariGunpla(Request $request) {
-    // }
-
-    // public function sampah(){
-    //     DB::select('SELECT * FROM gunpla where deleted_at = 1');
-    //     return redirect()->to('/gunpla')->with('success', 'Berhasil hapus data gunpla');
-    // $data = DB::select('SELECT * FROM pelanggan where is_deleted = 1');
-    // 
-
-    //     return view('/gunpla-sampah')
-    //     ->with('data', $data);
-    // }
 }
 

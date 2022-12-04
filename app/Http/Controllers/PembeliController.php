@@ -13,18 +13,23 @@ class PembeliController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function index(Request $request) {
-        $katakunci = $request->katakunci;
-        $jumlahbaris = 3;
-        if (strlen($katakunci)) {
-            $data = DB::table('pembeli')->where('id_pembeli', 'like', "%$katakunci%")
-            ->orWhere('nama_pembeli', 'like', "%$katakunci%")
-            ->orWhere('alamat_pembeli', 'like', "%$katakunci%")
-            ->paginate($jumlahbaris);
-        }else{
-            $data = DB::table('pembeli')->orderBy('id_pembeli', 'desc')->paginate(3);
-        }
-        return view('pembeli/index')->with('data', $data);
+    function index() {
+        $data = DB::select('SELECT * FROM pembeli where deleted_at is null');
+        return view('pembeli.index')
+        ->with('data', $data);
+    }
+
+    public function cariPembeli(Request $request) {
+        $caripembeli = $request->caripembeli;
+
+        $data = DB::table('pembeli')
+        ->where('id_pembeli', 'like', "%$caripembeli%")
+        ->orWhere('nama_pembeli', 'like', "%$caripembeli%")
+        ->orWhere('alamat_pembeli', 'like', "%$caripembeli%")
+        ->get();
+
+        return view('pembeli.index')
+            ->with('data', $data);
     }
 
     /**
@@ -128,6 +133,23 @@ class PembeliController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::delete('DELETE FROM pembeli WHERE id_pembeli = :id_pembeli', ['id_pembeli' => $id]);
+        return redirect()->route('pembeli.index')->with('success', 'Berhasil hapus data pembeli secara permanen');
+    }
+
+    public function softDelete($id) {
+        DB::update('UPDATE pembeli SET deleted_at = now() WHERE id_pembeli = :id_pembeli', ['id_pembeli' => $id]);
+        return redirect()->route('pembeli.index')->with('success', 'Berhasil hapus data pembeli secara sementara');
+    }
+
+    public function restore($id){
+        DB::update('UPDATE pembeli SET deleted_at = null WHERE id_pembeli = :id_pembeli', ['id_pembeli' => $id]);
+        return redirect()->route('pembeli.index')->with('success', 'Data pembeli telah dikembalikan');
+    }
+
+    public function Pembelisampah() {
+        $data = DB::select('SELECT * FROM pembeli where deleted_at is not null');
+        return view('pembeli.sampah')
+        ->with('data', $data);
     }
 }
