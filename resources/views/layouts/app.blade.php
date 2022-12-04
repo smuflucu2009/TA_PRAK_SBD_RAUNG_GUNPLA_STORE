@@ -16,7 +16,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body>
+<body style="background-image: url('https://r4.wallpaperflare.com/wallpaper/573/370/427/mobile-suit-gundam-mech-rx-78-gundam-gunpla-anime-hd-wallpaper-294048fd412aed3b06a7d89ff011f69d.jpg')">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -30,9 +30,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/gunpla">Gunpla</a>
-                        </li>
                     </ul>    
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
