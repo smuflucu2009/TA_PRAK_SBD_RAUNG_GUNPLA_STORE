@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('pembeli', function (Blueprint $table) {
             $table->integer('id_pembeli');
+            $table->primary('id_pembeli');
             $table->string('nama_pembeli');
             $table->string('alamat_pembeli');
             $table->unique(array('id_pembeli'));
+            $table->timestamps();
+            $table->dateTime('deleted_at');
         });
     }
 

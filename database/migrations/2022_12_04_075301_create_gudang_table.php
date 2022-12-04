@@ -14,13 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('gudang', function (Blueprint $table) {
-            $table->string('id_gudang');
-            $table->unique('id_gudang');
+            $table->integer('id_gudang');
             $table->string('id_gunpla');
-            $table->unique('id_gunpla');
-            $table->string('id_pembeli');
-            $table->unique('id_pembeli');
-            $table->string('alamat_gudang');
+            $table->foreign('id_gunpla')->references('id_gunpla')->on('gunpla')->onDelete('restrict');
+            $table->integer('id_pembeli');
+            $table->foreign('id_pembeli')->references('id_pembeli')->on('pembeli')->onDelete('restrict');
+            $table->string('kota_gudang');
+            $table->timestamps();
+            $table->dateTime('deleted_at');
         });
     }
 

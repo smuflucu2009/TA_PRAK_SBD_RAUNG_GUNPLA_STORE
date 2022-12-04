@@ -11,4 +11,5 @@ class Pembeli extends Model
     protected $table = "pembeli";
     protected $fillable = ['id_pembeli', 'nama_pembeli', 'alamat_pembeli'];
     public $timestamps = false;
+
 }

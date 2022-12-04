@@ -15,21 +15,29 @@ class GunplaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function index(Request $request) {
+    function index() {
         // $data = Gunpla::orderby('id_gunpla', 'desc')->paginate(4);
         // return view('gunpla/index')->with('data', $data);
-        $katakunci = $request->katakunci;
-        $jumlahbaris = 3;
-        if (strlen($katakunci)) {
-            $data = DB::table('gunpla')->where('id_gunpla', 'like', "%$katakunci%")
-            ->orWhere('nama_gunpla', 'like', "%$katakunci%")
-            ->orWhere('grade', 'like', "%$katakunci%")
-            ->orWhere('harga', 'like', "%$katakunci%")
-            ->paginate($jumlahbaris);
-        }else{
-            $data = DB::table('gunpla')->orderBy('id_gunpla', 'desc')->paginate(3);
-        }
-        return view('gunpla/index')->with('data', $data);
+        $data = DB::select('SELECT * FROM gunpla where deleted_at is null');
+        return view('gunpla.index')
+        ->with('data', $data);
+        
+    }
+
+    public function cariGunpla(Request $request) {
+        $carigunpla = $request->carigunpla;
+
+        $data = DB::table('gunpla')
+        ->where('id_gunpla', 'like', "%$carigunpla%")
+        ->orWhere('nama_gunpla', 'like', "%$carigunpla%")
+        ->orWhere('grade', 'like', "%$carigunpla%")
+        ->orWhere('harga', 'like', "%$carigunpla%")
+        ->get();
+
+        return view('gunpla.index')
+            ->with('data', $data);
+
+
     }
 
     /**
@@ -75,7 +83,7 @@ class GunplaController extends Controller
             'harga' => $request->harga,
         ]
         );
-        return redirect()->to('/gunpla')->with('success', 'Berhasil menambahkan data Pembeli');
+        return redirect()->route('gunpla.index')->with('success', 'Berhasil menambahkan data gunpla');
     }
 
     /**
@@ -98,7 +106,7 @@ class GunplaController extends Controller
     public function edit($id)
     {
         $data = DB::table('gunpla')->where('id_gunpla', $id)->first();
-        return view('Gunpla.edit')->with('data', $data);
+        return view('gunpla.edit')->with('data', $data);
     }
 
     /**
@@ -111,13 +119,12 @@ class GunplaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_gunpla' => 'required|unique:Gunpla,id_gunpla',
+            'id_gunpla' => 'required',
             'nama_gunpla' => 'required',
             'grade' => 'required',
             'harga' => 'required',
         ], [
             'id_gunpla.required' => 'ID gunpla wajib diisi',
-            'id_gunpla.unique' => 'ID gunpla sudah ada',
             'nama_gunpla.required' => 'Nama gunpla wajib diisi',
             'grade.required' => 'Grade gunpla wajib diisi',
             'harga.required' => 'Harga gunpla wajib diisi',
@@ -131,7 +138,7 @@ class GunplaController extends Controller
             'harga' => $request->harga,
         ]
         );
-        return redirect()->to('/gunpla')->with('success', 'Berhasil update data gunpla');
+        return redirect()->route('gunpla.index')->with('success', 'Berhasil update data gunpla');
     }
 
     /**
@@ -142,7 +149,38 @@ class GunplaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::delete('DELETE FROM gunpla WHERE id_gunpla = :id_gunpla', ['id_gunpla' => $id]);
+        return redirect()->route('gunpla.index')->with('success', 'Berhasil hapus data gunpla secara permanen');
     }
+
+    public function softDelete($id) {
+        DB::update('UPDATE gunpla SET deleted_at = now() WHERE id_gunpla = :id_gunpla', ['id_gunpla' => $id]);
+        return redirect()->route('gunpla.index')->with('success', 'Berhasil hapus data gunpla secara sementara');
+    }
+
+    public function restore($id){
+        // DB::table('pelanggan')->update(['is_deleted' => 0]);
+        DB::update('UPDATE gunpla SET deleted_at = null WHERE id_gunpla = :id_gunpla', ['id_gunpla' => $id]);
+        return redirect()->route('gunpla.index')->with('success', 'Data gunpla telah dikembalikan');
+    }
+
+    public function Gunplasampah() {
+        $data = DB::select('SELECT * FROM gunpla where deleted_at is not null');
+        return view('gunpla.sampah')
+        ->with('data', $data);
+    }
+
+    // public function cariGunpla(Request $request) {
+    // }
+
+    // public function sampah(){
+    //     DB::select('SELECT * FROM gunpla where deleted_at = 1');
+    //     return redirect()->to('/gunpla')->with('success', 'Berhasil hapus data gunpla');
+    // $data = DB::select('SELECT * FROM pelanggan where is_deleted = 1');
+    // 
+
+    //     return view('/gunpla-sampah')
+    //     ->with('data', $data);
+    // }
 }
 

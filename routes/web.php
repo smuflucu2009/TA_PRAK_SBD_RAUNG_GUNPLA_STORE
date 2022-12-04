@@ -21,13 +21,18 @@ use Illuminate\Support\Facades\Route;
 // route::get('mahasiswa', [MahasiswaController::class, 'index']);
 // route::get('mahasiswa/{id}', [MahasiswaController::class, 'detail'])->where('id', '[0-9]+');
 
-route::get('/', [HomeController::class, 'index']);
+route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 
 Route::resource('/gunpla', GunplaController::class);
-Route::get('/gunpla', [GunplaController::class, 'index']);
-Route::get('/gunpla-add', [GunplaController::class, 'create']);
-Route::get('/gunpla-update', [GunplaController::class, 'update']);
+Route::get('/gunpla', [GunplaController::class, 'index'])->name('gunpla.index');
+Route::get('/gunpla-add', [GunplaController::class, 'create'])->name('gunpla.create');
+// Route::get('/gunpla-update', [GunplaController::class, 'update']);
+Route::get('/cariGunpla', [GunplaController::class, 'cariGunpla'])->name('gunpla.cari');
+Route::post('/gunpla/softdelete/{id}', [GunplaController::class, 'softDelete'])->name('gunpla.softdelete');
+Route::get('/gunpla-restore-{id}', [GunplaController::class, 'restore'])->name('gunpla.restore');
+Route::get('/gunpla-sampah', [GunplaController::class, 'Gunplasampah'])->name('gunpla.sampah');
+// Route::post('delete/{id}', [GunplaController::class, 'destroy'])->name('gunpla.delete');
 
 
 Route::resource('/pembeli', PembeliController::class);

@@ -6,15 +6,14 @@ Halaman berisi list Gunpla.
 </p>
 <div class="my-3 p-3 bg-body rounded shadow-sm">
     <div class="pb-3">
-        <form class="d-flex" action="{{url('/gunpla')}}" method="get">
-            <input class="form-control me-1" type="search" name="katakunci" value="{{ Request::get('katakunci') }}"
-                placeholder="Masukkan kata kunci" aria-label="Search">
-            <button class="btn btn-secondary" type="submit">Cari</button>
-        </form>
+	    <form action={{ route('gunpla.cari') }} method="GET" >
+		<input type="search" name="carigunpla" placeholder="Cari gunpla .." value="{{ Request::get('carigunpla')}}">
+		<button class="btn btn-primary" type="submit">cari </button>
+	    </form>
     </div>
     <div class="d-flex justify-content-between">
-        <a href="{{ url('/gunpla-add')}}" class="btn btn-primary">+++</a>
-        <a href="#" class="btn btn-info">Sampah Masyarakat</a>
+        <a href="{{ route('gunpla.create') }}" class="btn btn-primary">+++</a>
+        <a href="{{ route('gunpla.sampah') }}" class="btn btn-info">Recycle Bin</a>
     </div>
     <table class="table table-striped text-center">
         <thead>
@@ -35,12 +34,19 @@ Halaman berisi list Gunpla.
                     <td>{{ $item->harga}}</td>
                     <td>
                         <a href='{{ url('gunpla/'.$item->id_gunpla.'/edit') }}' class="btn btn-warning btn-sm">Edit</a>
-                        <a href='#' class="btn btn-danger btn-sm">Hapus Empuk</a>
+                        <form onsubmit="return confirm('Yakin ingin menghapus permanen data ini?')" class="d-inline" action="{{ url('gunpla/'.$item->id_gunpla) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" name="submit" class="btn btn-danger btn-sm">Hard Del</button>
+                        </form>
+                        <form onsubmit="return confirm('Yakin ingin menghapus sementara data ini?')" class="d-inline" method="POST" action="{{ route('gunpla.softdelete', $item->id_gunpla) }}">
+                            @csrf
+                            <button type="submit" name="submit" class="btn btn-danger btn-sm">Soft Del</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    {{ $data->withQueryString()->links() }}
 </div> 
 @endsection

@@ -13,17 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        // ID Gunpla
-        // HG = AXXX
-        // MG = BXXX
-        // RG = CXXX
-        // PG = DXXX
         Schema::create('gunpla', function (Blueprint $table) {
             $table->string('id_gunpla');
+            $table->primary('id_gunpla');
             $table->unique('id_gunpla');
             $table->string('nama_gunpla');
             $table->string('grade');
             $table->string('harga');
+            $table->timestamps();
+            $table->dateTime('deleted_at');
         });
     }
 

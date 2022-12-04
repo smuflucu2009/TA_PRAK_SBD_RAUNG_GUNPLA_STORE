@@ -17,7 +17,7 @@
 <form action='{{url('/gunpla')}}' method='post'>
     @csrf
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <a href="{{url('/gunpla')}}" class="btn btn-secondary"><< kembali</a>
+        <a href="{{ route('gunpla.index') }}" class="btn btn-secondary"><< kembali</a>
         <div class="mb-3 row">
             <label for="id_gunpla" class="col-sm-2 col-form-label">ID Gunpla</label>
             <div class="col-sm-10">
