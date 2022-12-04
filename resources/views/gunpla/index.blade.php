@@ -34,14 +34,9 @@ Halaman berisi list Gunpla.
                     <td>{{ $item->harga}}</td>
                     <td>
                         <a href='{{ url('gunpla/'.$item->id_gunpla.'/edit') }}' class="btn btn-warning btn-sm">Edit</a>
-                        <form onsubmit="return confirm('Yakin ingin menghapus permanen data ini?')" class="d-inline" action="{{ url('gunpla/'.$item->id_gunpla) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" name="submit" class="btn btn-danger btn-sm">Hard Del</button>
-                        </form>
                         <form onsubmit="return confirm('Yakin ingin menghapus sementara data ini?')" class="d-inline" method="POST" action="{{ route('gunpla.softdelete', $item->id_gunpla) }}">
                             @csrf
-                            <button type="submit" name="submit" class="btn btn-danger btn-sm">Soft Del</button>
+                            <button type="submit" name="submit" class="btn btn-danger btn-sm">S.Del</button>
                         </form>
                     </td>
                 </tr>

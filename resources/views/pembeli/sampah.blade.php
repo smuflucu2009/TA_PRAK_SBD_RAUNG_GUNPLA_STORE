@@ -25,7 +25,12 @@ Halaman berisi sampah - sampah data Gunpla.
                     <td>{{ $item->nama_pembeli}}</td>
                     <td>{{ $item->alamat_pembeli}}</td>
                     <td>
-                        <a href="{{ route('pembeli.restore', $item->id_pembeli) }}" class="btn btn-primary">Restore</a>
+                        <a href="{{ route('pembeli.restore', $item->id_pembeli) }}" class="btn btn-primary btn-sm">Restore</a>
+                        <form onsubmit="return confirm('Yakin ingin menghapus permanen data ini?')" class="d-inline" action="{{ url('pembeli/'.$item->id_pembeli) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" name="submit" class="btn btn-danger btn-sm">H.Del</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
