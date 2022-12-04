@@ -14,11 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('gudang', function (Blueprint $table) {
-            $table->integer('id_gudang');
-            $table->string('id_gunpla');
-            $table->foreign('id_gunpla')->references('id_gunpla')->on('gunpla')->onDelete('restrict');
-            $table->integer('id_pembeli');
-            $table->foreign('id_pembeli')->references('id_pembeli')->on('pembeli')->onDelete('restrict');
+            $table->string('id_gudang');
+            $table->primary('id_gudang');
             $table->string('kota_gudang');
             $table->timestamps();
             $table->dateTime('deleted_at');

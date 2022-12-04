@@ -10,4 +10,6 @@ class Gudang extends Model
 {
     use HasFactory;
     protected $table = "gudang";
+    protected $fillable = ['id_gudang', 'kota_gudang'];
+    public $timestamps = false;
 }

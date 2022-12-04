@@ -19,6 +19,7 @@ Halaman berisi list Pembeli.
     <table class="table table-striped text-center">
         <thead>
             <tr>
+                <th class="col-md-1">No</th>
                 <th class="col-md-1">ID Pembeli</th>
                 <th class="col-md-1">Nama Pembeli</th>
                 <th class="col-md-1">Alamat Pembeli</th>
@@ -26,8 +27,10 @@ Halaman berisi list Pembeli.
             </tr>
         </thead>
         <tbody>
+            @php $no = 1; @endphp
             @foreach ($data as $item)
                 <tr>
+                    <td>{{ $no++ }}</td>
                     <td>{{ $item->id_pembeli}}</td>
                     <td>{{ $item->nama_pembeli}}</td>
                     <td>{{ $item->alamat_pembeli}}</td>

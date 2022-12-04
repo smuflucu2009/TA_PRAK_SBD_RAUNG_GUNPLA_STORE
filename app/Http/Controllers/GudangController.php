@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gudang;
+use App\Models\Gunpla;
+use App\Models\Pembeli;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class GudangController extends Controller
 {
@@ -12,9 +16,10 @@ class GudangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+        $data = DB::select('SELECT * FROM gudang where deleted_at is null');
+        return view('gudang.index')
+        ->with('data', $data);
     }
 
     /**
@@ -24,7 +29,7 @@ class GudangController extends Controller
      */
     public function create()
     {
-        //
+        return view('gudang.create');
     }
 
     /**
@@ -35,7 +40,24 @@ class GudangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Session::flash('id_gudang', $request->id_gudang);
+        Session::flash('kota_gudang', $request->kota_gudang);
+
+        $request->validate([
+            'id_gudang' => 'required|unique:Gudang,id_gudang',
+            'kota_gudang' => 'required',
+        ], [
+            'id_gudang.required' => 'ID gudang wajib diisi',
+            'id_gudang.unique' => 'ID gudang sudah ada',
+            'kota_gudang.required' => 'Nama kota wajib diisi',
+        ]);
+        DB::insert('INSERT INTO gudang(id_gudang, kota_gudang) VALUES (:id_gudang, :kota_gudang)',
+        [
+            'id_gudang' => $request->id_gudang,
+            'kota_gudang' => $request->kota_gudang,
+        ]
+        );
+        return redirect()->route('gudang.index')->with('success', 'Berhasil menambahkan data gudang');
     }
 
     /**
@@ -55,9 +77,9 @@ class GudangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $data = DB::table('gudang')->where('id_gudang', $id)->first();
+        return view('gudang.edit')->with('data', $data);
     }
 
     /**
@@ -67,9 +89,22 @@ class GudangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update($id, Request $request) {
+        $request->validate([
+            'id_gudang' => 'required',
+            'kota_gudang' => 'required',
+        ], [
+            'id_gudang.required' => 'ID gudang wajib diisi',
+            'kota_gudang.required' => 'Nama kota wajib diisi',
+        ]);
+        DB::update('UPDATE gudang SET id_gudang = :id_gudang, kota_gudang = :kota_gudang WHERE id_gudang = :id',
+        [
+            'id' => $id,
+            'id_gudang' => $request->id_gudang,
+            'kota_gudang' => $request->kota_gudang,
+        ]
+        );
+        return redirect()->route('gudang.index')->with('success', 'Berhasil update data gudang');
     }
 
     /**
@@ -82,4 +117,15 @@ class GudangController extends Controller
     {
         //
     }
+
+    // public function joins(){
+    //     $joins = DB::table('gudang')
+    //     ->join('gunpla', 'gudang.id_gunpla', '=', 'gunpla.id_gunpla')
+    //     ->join('pembeli', 'gudang.id_pembeli', '=', 'pembeli.id_pembeli')
+    //     ->select('gudang.id_gudang', 'gudang.kota_gudang', 'gunpla.nama_gunpla', 'pembeli.nama_pembeli', 'pembeli.alamat_pembeli')
+    //     ->get();
+
+    //     return view('gudang.index')->with('joins', $joins);
+    // }
+
 }

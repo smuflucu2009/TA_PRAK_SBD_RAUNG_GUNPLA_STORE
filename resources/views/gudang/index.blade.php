@@ -5,35 +5,28 @@
 Halaman berisi list Gudang, Rencananya sih gitu
 </p>
 <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="d-flex justify-content-between">
+        <a href="{{ route('gudang.create') }}" class="btn btn-primary">+++</a>
+    </div>
     <table class="table table-striped text-center">
         <thead>
             <tr>
                 <th class="col-md-1">ID Gudang</th>
-                <th class="col-md-1">Kota Gudang</th>
-                <th class="col-md-1">Nama Gundam</th>
-                <th class="col-md-1">Nama Pembeli</th>
-                <th class="col-md-1">Alamat Pembeli</th>
+                <th class="col-md-1">Kota</th>
                 <th class="col-md-1">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($gudang as $item)
+            @foreach ($data as $item)
                 <tr>
                     <td>{{ $item->id_gudang}}</td>
                     <td>{{ $item->kota_gudang}}</td>
                     <td>
-                        @foreach ($item->gunpla as $data)
-                            {{$data->nama_gunpla}}
-                        @endforeach</td>
-                    <td>
-                        @foreach ($item->pembeli as $data)
-                            {{$data->nama_pembeli}}
-                            {{$data->alamat_pembeli}}
-                        @endforeach
+                        <a href='{{ url('gudang/'.$item->id_gudang.'/edit') }}' class="btn btn-warning btn-sm">Edit</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-</div> 
+</div>
 @endsection

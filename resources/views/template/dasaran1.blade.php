@@ -18,6 +18,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="/gudang">Gudang</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/join">Join</a>
+              </li>
             </ul>
           </div>
         </div>
