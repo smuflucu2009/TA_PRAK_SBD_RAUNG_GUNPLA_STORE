@@ -155,7 +155,6 @@ class GunplaController extends Controller
     }
 
     public function restore($id){
-        // DB::table('pelanggan')->update(['is_deleted' => 0]);
         DB::update('UPDATE gunpla SET deleted_at = null WHERE id_gunpla = :id_gunpla', ['id_gunpla' => $id]);
         return redirect()->route('gunpla.index')->with('success', 'Data gunpla telah dikembalikan');
     }

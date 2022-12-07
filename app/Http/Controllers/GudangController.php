@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gudang;
-use App\Models\Gunpla;
-use App\Models\Pembeli;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -117,15 +114,5 @@ class GudangController extends Controller
     {
         //
     }
-
-    // public function joins(){
-    //     $joins = DB::table('gudang')
-    //     ->join('gunpla', 'gudang.id_gunpla', '=', 'gunpla.id_gunpla')
-    //     ->join('pembeli', 'gudang.id_pembeli', '=', 'pembeli.id_pembeli')
-    //     ->select('gudang.id_gudang', 'gudang.kota_gudang', 'gunpla.nama_gunpla', 'pembeli.nama_pembeli', 'pembeli.alamat_pembeli')
-    //     ->get();
-
-    //     return view('gudang.index')->with('joins', $joins);
-    // }
 
 }
