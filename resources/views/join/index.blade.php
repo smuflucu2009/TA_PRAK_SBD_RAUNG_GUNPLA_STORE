@@ -2,7 +2,6 @@
 @section('inti_data')
 <h1>Halaman Join</h1>
 <p style="color: rgb(255, 255, 255);">
-Halaman isinya join
 </p>
 <div class="my-3 p-3 bg-body rounded shadow-sm">
     <table class="table table-striped text-center">
