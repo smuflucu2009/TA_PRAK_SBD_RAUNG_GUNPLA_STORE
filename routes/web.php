@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gunpla', [GunplaController::class, 'index'])->name('gunpla.index');
     Route::get('/gunpla-add', [GunplaController::class, 'create'])->name('gunpla.create');
     Route::get('/cariGunpla', [GunplaController::class, 'cariGunpla'])->name('gunpla.cari');
+    Route::get('/sortingGunpla', [GunplaController::class, 'sortingGunpla'])->name('gunpla.sorting');
     Route::post('/gunpla/softdelete/{id}', [GunplaController::class, 'softDelete'])->name('gunpla.softdelete');
     Route::get('/gunpla-restore-{id}', [GunplaController::class, 'restore'])->name('gunpla.restore');
     Route::get('/gunpla-sampah', [GunplaController::class, 'Gunplasampah'])->name('gunpla.sampah');

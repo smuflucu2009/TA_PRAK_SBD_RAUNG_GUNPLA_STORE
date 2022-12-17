@@ -17,6 +17,7 @@ class GunplaController extends Controller
      */
     function index() {
         $data = DB::select('SELECT * FROM gunpla where deleted_at is null');
+        
         return view('gunpla.index')
         ->with('data', $data);
         
@@ -30,11 +31,17 @@ class GunplaController extends Controller
         ->orWhere('nama_gunpla', 'like', "%$carigunpla%")
         ->orWhere('grade', 'like', "%$carigunpla%")
         ->orWhere('harga', 'like', "%$carigunpla%")
+        ->orderBy('nama_gunpla')
         ->get();
 
         return view('gunpla.index')
             ->with('data', $data);
     }
+
+    // public function sortingGunpla(Request $request) {
+
+        
+    // }
 
     /**
      * Show the form for creating a new resource.

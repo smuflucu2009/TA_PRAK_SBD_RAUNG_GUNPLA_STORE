@@ -11,6 +11,9 @@ Halaman berisi list Gunpla.
 		<button class="btn btn-primary" type="submit">cari </button>
 	    </form>
     </div>
+    <div class="pb-3">
+        <a href='#' class="btn btn-warning btn-sm">Edit</a>
+    </div>
     <div class="d-flex justify-content-between">
         <a href="{{ route('gunpla.create') }}" class="btn btn-primary">+++</a>
         <a href="{{ route('gunpla.sampah') }}" class="btn btn-info">Recycle Bin</a>

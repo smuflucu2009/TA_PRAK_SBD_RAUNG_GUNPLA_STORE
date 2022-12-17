@@ -20,6 +20,7 @@
                     <option value="Semarang">Semarang</option>
                     <option value="Yogyakarta">Yogyakarta</option>
                     <option value="Surabaya">Surabaya</option>
+                    <option value="Jambi">Jambi</option>
                 </select>
             </div>
         </div>   
